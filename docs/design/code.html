@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Weather App Home Screen</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b8cee",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922", // Deep dark blue-grey
+                        "card-dark": "#1c252e", // Slightly lighter for cards
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "3xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar hiding for clean mobile look */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        
+        /* Gradient text for the big temperature */
+        .temp-gradient {
+            background: linear-gradient(180deg, #FFFFFF 0%, #A3C9F5 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-white antialiased selection:bg-primary/30">
+<!-- Main Container -->
+<div class="relative flex h-full min-h-screen w-full max-w-md mx-auto flex-col overflow-x-hidden shadow-2xl">
+<!-- Ambient Background Gradient -->
+<div class="fixed inset-0 pointer-events-none z-0">
+<div class="absolute top-0 left-0 right-0 h-[500px] bg-gradient-to-b from-primary/20 via-primary/5 to-transparent opacity-60"></div>
+</div>
+<!-- Header / Navigation -->
+<div class="relative z-10 flex items-center justify-between p-5 pb-2 pt-6">
+<button class="flex items-center justify-center p-2 rounded-full hover:bg-white/10 transition-colors">
+<span class="material-symbols-outlined text-white" style="font-size: 28px;">menu</span>
+</button>
+<div class="flex flex-col items-center">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-white" style="font-size: 18px;">location_on</span>
+<h2 class="text-white text-lg font-bold tracking-wide">Seoul</h2>
+</div>
+<div class="flex items-center gap-1">
+<div class="w-1.5 h-1.5 rounded-full bg-primary"></div>
+<span class="text-white/60 text-xs font-medium">Current Location</span>
+</div>
+</div>
+<button class="flex items-center justify-center p-2 rounded-full hover:bg-white/10 transition-colors">
+<span class="material-symbols-outlined text-white" style="font-size: 24px;">settings</span>
+</button>
+</div>
+<!-- Scrollable Content Area -->
+<div class="relative z-10 flex-1 overflow-y-auto no-scrollbar pb-8">
+<!-- Hero Section: Current Weather -->
+<div class="flex flex-col items-center justify-center pt-8 pb-10">
+<!-- Weather Icon (Large) -->
+<div class="mb-2 relative">
+<span class="material-symbols-outlined text-yellow-400 drop-shadow-[0_0_15px_rgba(250,204,21,0.5)]" style="font-size: 84px; font-variation-settings: 'FILL' 1;">wb_sunny</span>
+</div>
+<h1 class="text-[88px] font-thin leading-none tracking-tighter temp-gradient">24°</h1>
+<h2 class="text-white text-xl font-medium mt-2">Clear Sky</h2>
+<div class="flex items-center gap-3 mt-2 text-white/70 font-medium">
+<span>H: 28°</span>
+<span class="w-1 h-1 rounded-full bg-white/30"></span>
+<span>L: 19°</span>
+</div>
+</div>
+<!-- Hourly Forecast Section -->
+<div class="px-5 mb-6">
+<div class="bg-card-dark/60 backdrop-blur-md rounded-3xl p-5 border border-white/5">
+<div class="flex items-center justify-between mb-4 border-b border-white/5 pb-3">
+<div class="flex items-center gap-2 text-white/80">
+<span class="material-symbols-outlined text-sm">schedule</span>
+<h3 class="text-sm font-semibold uppercase tracking-wider">Hourly Forecast</h3>
+</div>
+<span class="text-xs text-primary font-medium cursor-pointer">See Details</span>
+</div>
+<!-- Horizontal Scroll Container -->
+<div class="flex overflow-x-auto gap-6 no-scrollbar pb-2">
+<!-- Now -->
+<div class="flex flex-col items-center gap-3 min-w-[3rem]">
+<span class="text-sm font-semibold text-white">Now</span>
+<span class="material-symbols-outlined text-yellow-400" style="font-size: 24px; font-variation-settings: 'FILL' 1;">wb_sunny</span>
+<span class="text-lg font-bold text-white">24°</span>
+</div>
+<!-- 1 PM -->
+<div class="flex flex-col items-center gap-3 min-w-[3rem]">
+<span class="text-sm text-white/60">1 PM</span>
+<span class="material-symbols-outlined text-yellow-400" style="font-size: 24px; font-variation-settings: 'FILL' 1;">wb_sunny</span>
+<span class="text-lg font-medium text-white">25°</span>
+</div>
+<!-- 2 PM -->
+<div class="flex flex-col items-center gap-3 min-w-[3rem]">
+<span class="text-sm text-white/60">2 PM</span>
+<span class="material-symbols-outlined text-white/80" style="font-size: 24px;">partly_cloudy_day</span>
+<span class="text-lg font-medium text-white">26°</span>
+</div>
+<!-- 3 PM -->
+<div class="flex flex-col items-center gap-3 min-w-[3rem]">
+<span class="text-sm text-white/60">3 PM</span>
+<span class="material-symbols-outlined text-white/80" style="font-size: 24px;">cloud</span>
+<span class="text-lg font-medium text-white">25°</span>
+</div>
+<!-- 4 PM -->
+<div class="flex flex-col items-center gap-3 min-w-[3rem]">
+<span class="text-sm text-white/60">4 PM</span>
+<span class="material-symbols-outlined text-blue-400" style="font-size: 24px;">rainy</span>
+<span class="text-lg font-medium text-white">23°</span>
+</div>
+<!-- 5 PM -->
+<div class="flex flex-col items-center gap-3 min-w-[3rem]">
+<span class="text-sm text-white/60">5 PM</span>
+<span class="material-symbols-outlined text-blue-400" style="font-size: 24px;">thunderstorm</span>
+<span class="text-lg font-medium text-white">22°</span>
+</div>
+<!-- 6 PM -->
+<div class="flex flex-col items-center gap-3 min-w-[3rem]">
+<span class="text-sm text-white/60">6 PM</span>
+<span class="material-symbols-outlined text-white/80" style="font-size: 24px;">cloud</span>
+<span class="text-lg font-medium text-white">21°</span>
+</div>
+</div>
+</div>
+</div>
+<!-- 10-Day Forecast Section -->
+<div class="px-5 mb-6">
+<div class="bg-card-dark/60 backdrop-blur-md rounded-3xl p-5 border border-white/5">
+<div class="flex items-center gap-2 text-white/80 mb-4 border-b border-white/5 pb-3">
+<span class="material-symbols-outlined text-sm">calendar_month</span>
+<h3 class="text-sm font-semibold uppercase tracking-wider">10-Day Forecast</h3>
+</div>
+<div class="flex flex-col gap-4">
+<!-- Day Row: Today -->
+<div class="grid grid-cols-[3.5rem_2rem_1fr] items-center gap-4">
+<span class="text-white font-medium">Today</span>
+<div class="flex flex-col items-center">
+<span class="material-symbols-outlined text-yellow-400" style="font-size: 24px; font-variation-settings: 'FILL' 1;">wb_sunny</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="text-white/60 text-sm w-6 text-right">19°</span>
+<div class="relative flex-1 h-1.5 bg-white/10 rounded-full overflow-hidden">
+<!-- Temperature Range Bar -->
+<div class="absolute top-0 bottom-0 left-[20%] right-[10%] bg-gradient-to-r from-green-400 to-yellow-400 rounded-full"></div>
+</div>
+<span class="text-white text-sm w-6">28°</span>
+</div>
+</div>
+<!-- Day Row: Tue -->
+<div class="grid grid-cols-[3.5rem_2rem_1fr] items-center gap-4">
+<span class="text-white font-medium">Tue</span>
+<div class="flex flex-col items-center">
+<span class="material-symbols-outlined text-blue-400" style="font-size: 24px;">rainy</span>
+<span class="text-[10px] text-blue-300 font-bold -mt-1">60%</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="text-white/60 text-sm w-6 text-right">18°</span>
+<div class="relative flex-1 h-1.5 bg-white/10 rounded-full overflow-hidden">
+<div class="absolute top-0 bottom-0 left-[15%] right-[25%] bg-gradient-to-r from-blue-400 to-green-400 rounded-full"></div>
+</div>
+<span class="text-white text-sm w-6">25°</span>
+</div>
+</div>
+<!-- Day Row: Wed -->
+<div class="grid grid-cols-[3.5rem_2rem_1fr] items-center gap-4">
+<span class="text-white font-medium">Wed</span>
+<div class="flex flex-col items-center">
+<span class="material-symbols-outlined text-white/80" style="font-size: 24px;">cloud</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="text-white/60 text-sm w-6 text-right">20°</span>
+<div class="relative flex-1 h-1.5 bg-white/10 rounded-full overflow-hidden">
+<div class="absolute top-0 bottom-0 left-[25%] right-[20%] bg-gradient-to-r from-green-400 to-yellow-400 rounded-full"></div>
+</div>
+<span class="text-white text-sm w-6">26°</span>
+</div>
+</div>
+<!-- Day Row: Thu -->
+<div class="grid grid-cols-[3.5rem_2rem_1fr] items-center gap-4">
+<span class="text-white font-medium">Thu</span>
+<div class="flex flex-col items-center">
+<span class="material-symbols-outlined text-yellow-400" style="font-size: 24px; font-variation-settings: 'FILL' 1;">wb_sunny</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="text-white/60 text-sm w-6 text-right">21°</span>
+<div class="relative flex-1 h-1.5 bg-white/10 rounded-full overflow-hidden">
+<div class="absolute top-0 bottom-0 left-[30%] right-[5%] bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full"></div>
+</div>
+<span class="text-white text-sm w-6">29°</span>
+</div>
+</div>
+<!-- Day Row: Fri -->
+<div class="grid grid-cols-[3.5rem_2rem_1fr] items-center gap-4">
+<span class="text-white font-medium">Fri</span>
+<div class="flex flex-col items-center">
+<span class="material-symbols-outlined text-white/80" style="font-size: 24px;">partly_cloudy_day</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="text-white/60 text-sm w-6 text-right">20°</span>
+<div class="relative flex-1 h-1.5 bg-white/10 rounded-full overflow-hidden">
+<div class="absolute top-0 bottom-0 left-[25%] right-[15%] bg-gradient-to-r from-green-400 to-yellow-400 rounded-full"></div>
+</div>
+<span class="text-white text-sm w-6">27°</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Details Grid -->
+<div class="px-5 mb-6">
+<div class="grid grid-cols-2 gap-4">
+<!-- UV Index Card -->
+<div class="bg-card-dark/60 backdrop-blur-md rounded-3xl p-4 border border-white/5 flex flex-col justify-between aspect-square">
+<div class="flex items-center gap-2 text-white/60">
+<span class="material-symbols-outlined text-sm">wb_sunny</span>
+<span class="text-xs uppercase font-semibold">UV Index</span>
+</div>
+<div class="mt-2">
+<div class="text-2xl font-bold text-white">4</div>
+<div class="text-sm text-white font-medium">Moderate</div>
+</div>
+<div class="w-full h-1 bg-gradient-to-r from-green-500 via-yellow-500 to-red-500 rounded-full mt-2 opacity-80">
+<div class="w-2 h-2 bg-white rounded-full border border-black shadow-sm translate-x-10 relative -top-0.5"></div>
+</div>
+<div class="text-xs text-white/50 mt-2">Use sun protection 11AM-4PM.</div>
+</div>
+<!-- Humidity Card -->
+<div class="bg-card-dark/60 backdrop-blur-md rounded-3xl p-4 border border-white/5 flex flex-col justify-between aspect-square">
+<div class="flex items-center gap-2 text-white/60">
+<span class="material-symbols-outlined text-sm">humidity_percentage</span>
+<span class="text-xs uppercase font-semibold">Humidity</span>
+</div>
+<div class="mt-2">
+<div class="text-2xl font-bold text-white">65%</div>
+<div class="text-sm text-white font-medium">The dew point is 17°.</div>
+</div>
+<div class="text-xs text-white/50 mt-auto">Feels slightly humid right now.</div>
+</div>
+<!-- Wind Card -->
+<div class="bg-card-dark/60 backdrop-blur-md rounded-3xl p-4 border border-white/5 flex flex-col justify-between aspect-square">
+<div class="flex items-center gap-2 text-white/60">
+<span class="material-symbols-outlined text-sm">air</span>
+<span class="text-xs uppercase font-semibold">Wind</span>
+</div>
+<div class="relative flex items-center justify-center flex-1 my-2">
+<!-- Compass Visual -->
+<div class="absolute inset-0 border-2 border-white/10 rounded-full flex items-center justify-center">
+<div class="w-1 h-1 bg-white/30 rounded-full"></div>
+</div>
+<div class="text-center z-10">
+<div class="text-xl font-bold text-white">4</div>
+<div class="text-xs text-white/70">m/s</div>
+</div>
+<div class="absolute w-full h-full flex items-center justify-center rotate-[-45deg]">
+<span class="material-symbols-outlined text-white text-xs absolute -top-1">north</span>
+</div>
+</div>
+<div class="text-xs text-white/50">Direction: North West</div>
+</div>
+<!-- Visibility Card -->
+<div class="bg-card-dark/60 backdrop-blur-md rounded-3xl p-4 border border-white/5 flex flex-col justify-between aspect-square">
+<div class="flex items-center gap-2 text-white/60">
+<span class="material-symbols-outlined text-sm">visibility</span>
+<span class="text-xs uppercase font-semibold">Visibility</span>
+</div>
+<div class="mt-2">
+<div class="text-2xl font-bold text-white">14 km</div>
+<div class="text-sm text-white font-medium">Perfectly clear view.</div>
+</div>
+<div class="text-xs text-white/50 mt-auto">Haze is not expected.</div>
+</div>
+</div>
+</div>
+<!-- Map / Location Preview -->
+<div class="px-5 mb-8">
+<div class="bg-card-dark/60 backdrop-blur-md rounded-3xl p-5 border border-white/5 flex flex-col gap-3">
+<div class="flex items-center gap-2 text-white/80">
+<span class="material-symbols-outlined text-sm">map</span>
+<h3 class="text-sm font-semibold uppercase tracking-wider">Precipitation Map</h3>
+</div>
+<div class="w-full h-32 rounded-xl overflow-hidden relative bg-[#2a303c]">
+<img alt="Dark map visualization of Seoul city showing weather patterns" class="w-full h-full object-cover opacity-60" data-alt="Dark map visualization of Seoul city showing weather patterns" data-location="Seoul" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDm50WlPUwUuG3yljqzcTdWkMQKVc2vCiuO9s-U42FL7hEWNA2RUPWNvjAJPGIQIQM4uzl-POAMaBZF7Bfa62yaiXXQiqRP6BrW0RRvRv6d15SgHei699-umtUfVoa5xfKcqjBNETZMeXySDhc_4hAWK8fNN7pR_HdWPjETvUx1xHRVkv6NKiAmBIYUjjEof7I-oXdKj5YcYDdNyDk8Fahbr1ZRpmHlvAnEWesYMg813EdTXCLjZS6zMNGwLTY_Bdxtw7EPnSZxwR4"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-3">
+<button class="bg-white/10 hover:bg-white/20 backdrop-blur text-xs text-white py-1 px-3 rounded-lg flex items-center gap-1 transition-colors">
+<span class="material-symbols-outlined" style="font-size: 14px;">open_in_full</span>
+                                Open Map
+                            </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Tab Bar -->
+<div class="bg-card-dark/90 backdrop-blur-xl border-t border-white/5 px-6 py-3 flex justify-between items-center z-20">
+<button class="flex flex-col items-center gap-1 text-primary">
+<span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">location_on</span>
+<span class="text-[10px] font-medium">Weather</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-white/40 hover:text-white transition-colors">
+<span class="material-symbols-outlined text-2xl">list</span>
+<span class="text-[10px] font-medium">Cities</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-white/40 hover:text-white transition-colors">
+<span class="material-symbols-outlined text-2xl">map</span>
+<span class="text-[10px] font-medium">Radar</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-white/40 hover:text-white transition-colors">
+<span class="material-symbols-outlined text-2xl">person</span>
+<span class="text-[10px] font-medium">Profile</span>
+</button>
+</div>
+</div>
+</body></html>
